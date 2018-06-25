@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@16.4.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.4.1/umd/react-dom.development.js"></script>
+  </head>
+    <div id="content"></div>
+    <script type="text/javascript">
+    class HelloWorld extends React.Component {
+      render() {
+        return React.createElement(
+          'h1',
+          null,
+          'Hello ' + this.props.frameworkName + ' world!'
+        )
+      }
+    }
+    ReactDOM.render(
+      React.createElement(
+        'div',
+        null,
+        React.createElement(HelloWorld, {
+          id: 'ember',
+          frameworkName: 'Ember.js',
+          title: 'A framework for creating ambitious web applications.'}
+        ),
+        React.createElement(HelloWorld, {
+          id: 'backbone',
+          frameworkName: 'Backbone.js',
+          title: 'Backbone.js gives structure to web applications...'}
+        ),
+        React.createElement(HelloWorld, {
+          id: 'angular',
+          frameworkName: 'Angular.js',
+          title: 'Superheroic JavaScript MVW Framework'}
+        )
+      ),
+      document.getElementById('content')
+    )
+    </script>
+  <body>
+  </body>
+</html>
