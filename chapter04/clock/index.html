@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@16.4.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.4.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script type="text/babel">
+    class Clock extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = {currentTime: (new Date()).toLocaleString()}
+        this.startUpdate()
+      }
+      startUpdate() {
+        setInterval(()=>{
+          console.log('Updating time...')
+          this.setState({
+            currentTime: (new Date()).toLocaleString()
+          })
+        }, 1000)
+      }
+      render() {
+        console.log('Rendering Clock...')
+        return <div>{this.state.currentTime}</div>
+      }
+    }
+
+    ReactDOM.render(
+      <Clock />,
+      document.getElementById('content')
+    )
+    </script>
+  </body>
+</html>
