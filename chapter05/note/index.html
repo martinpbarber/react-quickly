@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@16.4.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.4.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script type="text/babel">
+    class Note extends React.Component {
+      confirmLeave(e) {
+        let confirmationMessage = 'Do you really want to close?'
+        e.returnValue = confirmationMessage
+        return confirmationMessage
+      }
+      componentDidMount() {
+        console.log('Attaching confirmLeave event listener for beforeunload')
+        window.addEventListener('beforeunload', this.confirmLeave)
+      }
+      componentWillUnmount() {
+        console.log('Removing confirmLeave event listener for beforeunload')
+        window.removeEventListener('beforeunload', this.confirmLeave)
+      }
+      render() {
+        console.log('Render')
+        return (
+          <div>
+            Here will be our input field for notes (parent will remove in {this.props.secondsLeft} seconds)
+          </div>
+        )
+      }
+    }
+
+    let secondsLeft = 5
+    let interval = setInterval(()=>{
+        if (secondsLeft == 0) {
+          ReactDOM.render(
+            <div>
+              Note was removed after {secondsLeft} seconds
+            </div>,
+            document.getElementById('content')
+          )
+          clearInterval(interval)
+        } else {
+          ReactDOM.render(
+              <Note secondsLeft={secondsLeft}/>,
+            document.getElementById('content')
+          )
+        }
+        secondsLeft--
+    }, 1000)
+    </script>
+  </body>
+</html>
