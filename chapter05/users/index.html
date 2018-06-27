@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://unpkg.com/react@16.4.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.4.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script type="text/babel">
+    class Users extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = {
+          users: []
+        }
+      }
+      componentDidMount() {
+        fetch(this.props['data-url'])
+          .then((response)=>response.json())
+          .then((users)=>this.setState({users: users}))
+      }
+      render() {
+        return (
+          <div className="container">
+            <h1>List of Users</h1>
+            <table className="table-striped table-condensed table table-bordered table-hover">
+              <tbody>{this.state.users.map((user)=>
+                <tr key={user.id}>
+                  <td>{user.first_name} {user.last_name}</td>
+                  <td>{user.email}</td>
+                  <td>{user.ip_address}</td>
+                </tr>)}
+              </tbody>
+            </table>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(
+      <Users data-url="real-user-data.json"/>,
+      document.getElementById('content')
+    )
+    </script>
+  </body>
+</html>
