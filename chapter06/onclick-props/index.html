@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@16.4.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.4.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script type="text/babel">
+    class Content extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = {counter: 0}
+        this.handleClick = this.handleClick.bind(this)
+      }
+      handleClick(event) {
+        this.setState({counter: ++this.state.counter})
+      }
+      render() {
+        return (
+          <div>
+            <ClickCounterButton
+              handler={this.handleClick}
+              counter={this.state.counter}
+            />
+          </div>
+        )
+      }
+    }
+
+    class ClickCounterButton extends React.Component {
+      render() {
+        return  (
+          <button onClick={this.props.handler}>
+            Increase Volume: (Current volume is {this.props.counter})
+          </button>
+        )
+      }
+    }
+
+    ReactDOM.render(
+      <Content/>,
+      document.getElementById('content')
+    )
+    </script>
+  </body>
+</html>
