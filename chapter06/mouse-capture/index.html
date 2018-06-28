@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@16.4.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.4.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script type="text/babel">
+    class Mouse extends React.Component {
+      render() {
+        return (
+          <div
+            style={{border: '1px solid red'}}
+            onMouseOverCapture={(event)=>{
+              console.log('mouse over capture event')
+              console.log(event)
+            }}
+            onMouseOver={(event)=>{
+              console.log('mouse over bubbling event')
+              console.log(event)
+            }}
+          >
+            OpenConsole and move your mouse over here
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(
+      <Mouse/>,
+      document.getElementById('content')
+    )
+    </script>
+  </body>
+</html>
