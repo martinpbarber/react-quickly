@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+
+    <script src="https://unpkg.com/react@16.4.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.4.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="slider.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+    $(function() {
+      let handleChange = (e, ui)=>{
+        var slideEvent = new CustomEvent('slide', {
+          detail: {ui: ui, jQueryEvent: e}
+        })
+        window.dispatchEvent(slideEvent)
+      }
+      $('#slider').slider({
+        'change': handleChange,
+        'slide': handleChange
+      })
+    })
+    </script>
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <h1>Slider Integration</h1>
+      <div id="slider"></div>
+
+      <div id="content"></div>
+    </div>
+    <script type="text/babel">
+    class SliderButtons extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = { sliderValue: 0 }
+        this.handleSlide = this.handleSlide.bind(this)
+        this.handleChange = this.handleChange.bind(this)
+      }
+      handleSlide(event, ui) {
+        this.setState({sliderValue: ui.value})
+      }
+      handleChange(value) {
+        return ()=> {
+          $('#slider').slider('value', this.state.sliderValue + value)
+          this.setState({sliderValue: this.state.sliderValue + value})
+        }
+      }
+      componentDidMount() {
+        $('#slider').on('slide', this.handleSlide)
+      }
+      componentWillUnmount() {
+        $('#slider').off('slide', this.handleSlide)
+      }
+      render() {
+        return (
+          <div>
+            <button disabled={(this.state.sliderValue < 1 ) ? true : false}
+              className="btn btn-default"
+              onClick={this.handleChange(-1)}>
+               1 Less ({this.state.sliderValue-1})
+            </button>
+            <button disabled={(this.state.sliderValue > 99 ) ? true : false}
+              className="btn btn-default"
+              onClick={this.handleChange(1)}>
+               1 More ({this.state.sliderValue+1})
+            </button>
+          </div>
+        )
+      }
+    }
+
+    class SliderValue extends React.Component {
+      constructor(props) {
+        super(props)
+        this.handleSlide = this.handleSlide.bind(this)
+        this.state = {
+          sliderValue: 0
+        }
+      }
+      handleSlide(event) {
+        this.setState({
+          sliderValue: event.detail.ui.value
+        })
+      }
+      componentDidMount() {
+        window.addEventListener('slide', this.handleSlide)
+      }
+      componentWillMount() {
+        window.removeEventListener('slide', this.handleSlide)
+      }
+      render() {
+        return (
+          <div className="">
+            Value: {this.state.sliderValue}
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(
+      <div>
+        <SliderValue />
+        <SliderButtons />
+      </div>,
+      document.getElementById('content')
+    )
+    </script>
+  </body>
+</html>
