@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://unpkg.com/react@16.4.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.4.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script type="text/babel">
+    class Content extends React.Component {
+      constructor(props) {
+        super(props)
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.prompt = 'Please enter your email to win $1,000,000!'
+      }
+      handleSubmit(event) {
+        console.log(this.refs)
+        let email = this.refs.email
+        let comments = this.refs.comments
+        console.log('email: ' + ReactDOM.findDOMNode(email).value)
+        console.log('comments: ' + ReactDOM.findDOMNode(comments).value)
+      }
+      render() {
+        return (
+          <div className="well">
+            <p>{this.prompt}</p>
+            <div className="form-group">
+              Email: <input ref="email" className="form-control" type="text" placeholder="hi@azat.co"/>
+            </div>
+            <div className="form-group">
+              Comments: <textarea ref="comments" className="form-control" placeholder="I like your website"/>
+            </div>
+            <div className="form-group">
+              <a className="btn btn-primary" value="Submit" onClick={this.handleSubmit}>Submit</a>
+            </div>
+          </div>
+        )
+      }
+    }
+    ReactDOM.render(
+      <div>
+        <Content/>
+      </div>,
+      document.getElementById('content')
+    )
+    </script>
+  </body>
+</html>
