@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://unpkg.com/react@16.4.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.4.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script type="text/babel">
+    class Content extends React.Component {
+      render() {
+        return (
+          <div>
+            <Button buttonLabel="Start"/>
+            <Button />
+            <Button />
+            <Button />
+          </div>
+        )
+      }
+    }
+
+    class Button extends React.Component {
+      render() {
+        return (
+          <button className="btn">{this.props.buttonLabel}</button>
+        )
+      }
+    }
+    Button.defaultProps = {buttonLabel: "Submit"}
+
+    ReactDOM.render(
+      <div>
+        <Content/>
+      </div>,
+      document.getElementById('content')
+    )
+    </script>
+  </body>
+</html>
