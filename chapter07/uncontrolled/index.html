@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://unpkg.com/react@16.4.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.4.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script type="text/babel">
+    class Content extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = { textbook: '' }
+        this.handleChange = this.handleChange.bind(this)
+      }
+      handleChange(event) {
+        console.log(event.target.value)
+        this.setState({textbook: event.target.value})
+      }
+      render() {
+        return (
+          <div>
+            <input type="text"
+              placeholder="Eloquent TypeScript: Myth or Reality"
+              onChange={this.handleChange}/>
+            <br/>
+            <span>{this.state.textbook}</span>
+          </div>
+        )
+      }
+    }
+    ReactDOM.render(
+      <div>
+        <Content/>
+      </div>,
+      document.getElementById('content')
+    )
+    </script>
+  </body>
+</html>
